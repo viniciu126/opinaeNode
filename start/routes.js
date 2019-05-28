@@ -21,3 +21,5 @@ Route.get('/', () => {
 })
 
 Route.post('cadastrar', 'UsuarioController.cadastrar')
+Route.post('login', 'LoginController.login')
+Route.post('logout', 'LoginController.logout')

@@ -6,33 +6,44 @@ const Hash = use('Hash')
 class UsuarioController {
 
   async cadastrar({ request, response }) {
+    const { nome, email, ra, password, tipo } = request.all()
 
-    const { nome, email, ra, password } = request.all()
+    //Encriptografando senha
     await Hash.make(password)
 
-    const user = await User.create({ nome, email, ra, password })
-    await this.atribuirPermissaoAluno(user)
+    let user = await User.create({ nome, email, ra, password })
+    await this.atribuirTipo(tipo, user)
 
     const role = await user.getRoles()
+    user.tipo = role
 
     return response.status(200).send({
-      Usuario: user,
-      Tipo: role
+      user
     })
 
   }
 
-  async atribuirPermissaoAluno(user) {
+  async atribuirTipo(tipo, user) {
+    switch (tipo) {
+      case 'admin':
+        const admin = await Role.findBy('slug', 'admin')
 
-    const aluno = await Role.findBy('slug', 'aluno')
-    await user.roles().attach([aluno.id])
+        await user.roles().attach([admin.id])
+        break;
+      case 'professor':
+        const professor = await Role.findBy('slug', 'professor')
 
-    const roles = await user.getRoles()
+        await user.roles().attach([professor.id])
+        break;
+      case 'aluno':
+        const aluno = await Role.findBy('slug', 'aluno')
 
-    console.log('O', user, 'é um ', roles)
-
+        await user.roles().attach([aluno.id])
+        break;
+      default:
+        console.log('Por favor, digite um tipo para o usuário!')
+    }
   }
-
 }
 
 module.exports = UsuarioController
