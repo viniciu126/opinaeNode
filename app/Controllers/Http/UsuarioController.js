@@ -6,22 +6,31 @@ const Hash = use('Hash')
 class UsuarioController {
 
   async cadastrar({ request, response }) {
-    try {
-      const { nome, email, ra, password } = request.all()
-      await Hash.make(password)
 
-      const user = await User.create({ nome, email, ra, password })
-      const userRole = await Role.findBy('slug', 'aluno')
+    const { nome, email, ra, password } = request.all()
+    await Hash.make(password)
 
-      // Associa o userRole ao usuário
-      await user.roles().attach([userRole])
+    const user = await User.create({ nome, email, ra, password })
+    await this.atribuirPermissaoAluno(user)
 
-      console.log(user.HasRole, user.roles, user.roles)
+    const role = await user.getRoles()
 
-      return user.toJSON()
-    } catch (e) {
-      return e
-    }
+    return response.status(200).send({
+      Usuario: user,
+      Tipo: role
+    })
+
+  }
+
+  async atribuirPermissaoAluno(user) {
+
+    const aluno = await Role.findBy('slug', 'aluno')
+    await user.roles().attach([aluno.id])
+
+    const roles = await user.getRoles()
+
+    console.log('O', user, 'é um ', roles)
+
   }
 
 }
