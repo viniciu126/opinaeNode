@@ -17,8 +17,9 @@ class UsuarioController {
     const role = await user.getRoles()
     user.tipo = role
 
-    return response.status(200).send({
-      user
+    return response.json({
+      status: 'success',
+      data: user
     })
 
   }

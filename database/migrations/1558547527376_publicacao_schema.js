@@ -7,7 +7,8 @@ class PublicacaoSchema extends Schema {
   up() {
     this.create('publicacaos', (table) => {
       table.increments()
-      table.text('descricao')
+      table.integer('user_id').unsigned().notNullable()
+      table.text('publicacao')
       table.timestamps()
     })
   }

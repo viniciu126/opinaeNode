@@ -4,6 +4,13 @@
 const Model = use('Model')
 
 class Publicacao extends Model {
+    user () {
+        return this.belongsTo('App/Models/User')
+    }
+
+    comentarios() {
+        return this.hasMany('App/Models/Comentario')
+    }
 }
 
 module.exports = Publicacao

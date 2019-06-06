@@ -6,7 +6,12 @@ class LoginController {
   async login({ request, auth }) {
     const { ra, password } = request.all()
 
-    return auth.attempt(ra, password, true)
+    const login = auth.attempt(ra, password, true)
+
+    return response.json({
+      status: 'success',
+      data: login
+    })
   }
 
   async logout({ auth }) {

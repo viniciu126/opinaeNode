@@ -23,3 +23,5 @@ Route.get('/', () => {
 Route.post('cadastrar', 'UsuarioController.cadastrar')
 Route.post('login', 'LoginController.login')
 Route.post('logout', 'LoginController.logout')
+Route.post('postar', 'PublicacaoController.postar')
+Route.post('comentar', 'PublicacaoController.comentar')
