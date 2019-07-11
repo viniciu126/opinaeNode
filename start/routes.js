@@ -13,7 +13,7 @@ Route.group(() => {
       .only(['store'])
 
   Route.resource('publicacao', 'PublicacaoController')
-      .only(['store'])
+      .only(['index', 'store', 'show'])
 
   Route.resource('comentario', 'ComentarioController')
       .only(['store'])

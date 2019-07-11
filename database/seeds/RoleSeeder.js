@@ -20,18 +20,21 @@ class RoleSeeder {
     admin.name = 'Admin'
     admin.slug = 'admin'
     admin.description = 'Administrador do Sistema'
+
     await admin.save()
 
     const professor = new Role()
     professor.name = 'Professor'
     professor.slug = 'professor'
     professor.description = 'Professor da Universidade'
+
     await professor.save()
 
     const aluno = new Role()
     aluno.name = 'Aluno'
     aluno.slug = 'aluno'
     aluno.description = 'Aluno da Universidade'
+
     await aluno.save()
   }
 }

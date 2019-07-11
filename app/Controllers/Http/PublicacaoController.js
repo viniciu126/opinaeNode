@@ -1,26 +1,34 @@
 'use strict'
+
 const Publicacao = use('App/Models/Publicacao')
-const Comentario = use('App/Models/Comentario')
-const Database = use('Database')
 
 class PublicacaoController {
-  async store ({ request, auth }) {
-      const { textoPublicacao } = request.all()
-
-      const user = await auth.getUser()
-
-      const publicacao = {
-          user_id: user.id,
-          publicacao: textoPublicacao
-      }
-
-      return Publicacao.create(publicacao)
+  async index () {
+    return Publicacao.query()
+        .with('comentarios')
+        .fetch()
   }
 
-  async show () {
-      return Publicacao.query()
-          .with('comentarios')
-          .fetch()
+  async store ({ request, response, auth }) {
+      const { textoPublicacao } = request.all()
+      const user = await auth.getUser()
+
+      const publicacao = await Publicacao.create({
+        user_id: user.id,
+        publicacao: textoPublicacao
+      })
+
+      return response.json({
+        status: 'sucess',
+        data: publicacao
+      })
+  }
+
+  async show ({ params }) {
+    return Publicacao.query()
+      .where('id', params.id)
+      .with('comentarios')
+      .fetch()
   }
 }
 
