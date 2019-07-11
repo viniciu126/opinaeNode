@@ -3,7 +3,7 @@ const User = use('App/Models/User')
 
 class LoginController {
 
-  async login({ request, auth }) {
+  async login ({ request, auth }) {
     const { ra, password } = request.all()
 
     const login = auth.attempt(ra, password, true)
@@ -14,7 +14,7 @@ class LoginController {
     })
   }
 
-  async logout({ auth }) {
+  async logout ({ auth }) {
     auth.logout()
   }
 
