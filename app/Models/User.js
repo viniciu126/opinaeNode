@@ -28,10 +28,6 @@ class User extends Model {
     return this.tipo = tipo
   }
 
-  tokens() {
-    return this.hasMany('App/Models/Token')
-  }
-
   publicacoes () {
     return this.hasMany('App/Models/Publicacao')
   }
