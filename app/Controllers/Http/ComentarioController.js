@@ -13,8 +13,6 @@ class ComentarioController {
           comentario: textComentario
         })
 
-        console.log(comentario)
-
         return response.json({
             status: 'success',
             data: comentario

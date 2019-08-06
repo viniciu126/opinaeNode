@@ -5,14 +5,14 @@ const Hash = use('Hash')
 
 class UsuarioController {
   async store ({ request, response }) {
-    const { nome, email, ra, password, tipo } = request.all()
-
+    const data = request.only(['nome', 'email', 'ra', 'password'])
+    
     //Encriptografando senha
-    await Hash.make(password)
+    await Hash.make(data.password)
 
-    await User.setTipo(tipo)
+    await User.setTipo(request.input('tipo'))
 
-    let user = await User.create({ nome, email, ra, password })
+    let user = await User.create(data)
 
     const role = await user.getRoles()
     user.tipo = role

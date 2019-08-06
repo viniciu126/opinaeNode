@@ -11,6 +11,9 @@ Route.group(() => {
   //falta validator
   Route.resource('usuario', 'UsuarioController')
       .only(['store'])
+      .validator(new Map([
+        ['usuario.store','storeUsuario']
+      ]))
 
   Route.resource('publicacao', 'PublicacaoController')
       .only(['index', 'store', 'show'])
@@ -18,7 +21,7 @@ Route.group(() => {
   Route.resource('comentario', 'ComentarioController')
       .only(['store'])
 
-  Route.post('login', 'LoginController.login')
+  Route.post('login', 'LoginController.login').validator('Login')
 
   Route.post('logout', 'LoginController.logout')
 
