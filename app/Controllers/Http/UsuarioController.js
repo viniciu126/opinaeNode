@@ -23,6 +23,32 @@ class UsuarioController {
     })
 
   }
+
+  async trocaSenha ({request, auth, response}){
+    const usuario = await auth.getUser();
+
+    const verificarSenha = await Hash.verify(
+      request.input('password'),
+      usuario.password
+    );
+
+    if(!verificarSenha){
+      return response.status(400).json({
+        status: 'erro',
+        message: 'Não foi possivel alterar a senha'
+      })
+    };
+
+    usuario.password = await Hash.make(request.input('newPassword'));
+    
+    await usuario.save();
+
+    return response.json({
+      status:'sucesso',
+      message: 'Senha alterada com sucesso'
+    });
+
+  };
 }
 
 module.exports = UsuarioController

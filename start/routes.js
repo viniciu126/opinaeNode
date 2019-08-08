@@ -25,4 +25,8 @@ Route.group(() => {
 
   Route.post('logout', 'LoginController.logout')
 
+  Route.put('troca_senha', 'UsuarioController.trocaSenha');
+
+  Route.get('logout', 'LoginController.logout');
+
 }).prefix('api')
